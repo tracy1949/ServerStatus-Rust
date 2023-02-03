@@ -22,20 +22,23 @@ mv -v stat_client.service /etc/systemd/system/stat_client.service
 systemctl daemon-reload
 
 # 启动
-systemctl start stat_server
-systemctl start stat_client
-
-# 状态查看
-systemctl status stat_server
-systemctl status stat_client
+systemctl start stat_server.service
+systemctl start stat_client.service
 
 # 使用以下命令开机自启
-systemctl enable stat_server
-systemctl enable stat_client
+systemctl enable stat_server.service
+systemctl enable stat_client.service
+
+systemctl restart stat_server.service
+systemctl restart stat_client.service
+
+# 状态查看
+systemctl status stat_server.service
+systemctl status stat_client.service
 
 # 停止
-# systemctl stop stat_server
-# systemctl stop stat_client
+# systemctl stop stat_server.service
+# systemctl stop stat_client.service
 
 # https://fedoraproject.org/wiki/Systemd/zh-cn
 # https://docs.fedoraproject.org/en-US/quick-docs/understanding-and-administering-systemd/index.html
