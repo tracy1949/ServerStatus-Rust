@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ex
 
-WORKSPACE=/opt/ServerStatus
+WORKSPACE=/root/docker/ServerStatus
 mkdir -p ${WORKSPACE}
 cd ${WORKSPACE}
 
