@@ -10,8 +10,8 @@ Tip="\033[32m[注意]\033[0m"
 
 client_dir=/root/docker/ServerStatus/client/
 server_dir=/root/docker/ServerStatus/server/
-client_conf=/lib/systemd/system/stat_client.service
-server_conf=/lib/systemd/system/stat_server.service
+client_conf=/etc/systemd/system/stat_client.service
+server_conf=/etc/systemd/system/stat_server.service
 
 if [ "${MIRROR}" = CN ]; then
     echo cn
@@ -236,8 +236,8 @@ function get_status() {
     install_tool
     rm -f ServerStatus-${arch}-unknown-linux-musl.zip stat_*
     cd /tmp || exit
-    wget "${MIRROR}https://github.com/zdz/Serverstatus-Rust/releases/latest/download/server-${arch}-unknown-linux-musl.zip"
-    wget "${MIRROR}https://github.com/zdz/Serverstatus-Rust/releases/latest/download/client-${arch}-unknown-linux-musl.zip"
+    wget "${MIRROR}https://github.com/tracy1949/Serverstatus-Rust/releases/latest/download/server-${arch}-unknown-linux-musl.zip"
+    wget "${MIRROR}https://github.com/tracy1949*/Serverstatus-Rust/releases/latest/download/client-${arch}-unknown-linux-musl.zip"
     unzip -o server-${arch}-unknown-linux-musl.zip
     unzip -o client-${arch}-unknown-linux-musl.zip
 }
@@ -256,7 +256,7 @@ function install_client() {
     echo -e "${Info} 下载 ${arch} 二进制文件"
     [ -f "/tmp/stat_client" ] || get_status
     mkdir -p ${client_dir}
-    mv /tmp/stat_client /usr/local/ServerStatus/client/stat_client
+    mv /tmp/stat_client /root/docker/ServerStatus/client/stat_client
     chmod +x /root/docker/ServerStatus/client/stat_client
     input_upm
     get_conf
