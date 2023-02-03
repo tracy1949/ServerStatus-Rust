@@ -5,8 +5,8 @@ http_addr = "0.0.0.0:8080"
 offline_threshold = 30
 
 # 管理员账号,不设置默认随机生成，用于查看 /detail, /map
-admin_user = "tracy561"
-admin_pass = "200511"
+admin_user = ""
+admin_pass = ""
 
 # hosts 跟 hosts_group 两种配置模式任挑一种配置即可
 # name 主机唯一标识，不可重复，alias 为展示名
@@ -19,27 +19,27 @@ admin_pass = "200511"
 # os 标签可选，不填则使用上报数据，ndd(next due date) 下次续费时间, spec 为主机规格
 # os 可用值 centos debian ubuntu alpine pi arch windows linux
 hosts = [
-  {name = "h1", password = "p1", alias = "n1", location = "🏠", type = "kvm", labels = "os=arch;ndd=2022/11/25;spec=2C/4G/60G;"},
-  {name = "h2", password = "p2", alias = "n2", location = "🏢", type = "kvm", disabled = false},
-  {name = "h3", password = "p3", alias = "n3", location = "🏡", type = "kvm", monthstart = 1},
-  {name = "h4", password = "p4", alias = "n4", location = "cn", type = "kvm", notify = true, labels = "ndd=2022/11/25;spec=2C/4G/60G;"},
+  {name = "arm", password = "p1", alias = "MiLanarm", location = "🇮🇹", type = "kvm", , monthstart = 1, , notify = true, labels = "os=Ubuntu;spec=4C/24G/10T;"},
+  # {name = "h2", password = "p2", alias = "n2", location = "🏢", type = "kvm", disabled = false},
+  # {name = "h3", password = "p3", alias = "n3", location = "🏡", type = "kvm", monthstart = 1},
+  # {name = "h4", password = "p4", alias = "n4", location = "cn", type = "kvm", notify = true, labels = "ndd=2022/11/25;spec=2C/4G/60G;"},
 ]
 
 # 动态注册模式，不再需要针对每一个主机做单独配置
 # gid 为模板组id, 自动注册唯一标识，不可重复
 hosts_group = [
   # 可以按国家地区或用途来做分组
-  {gid = "g1", password = "pp", location = "🏠", type = "kvm", labels = "os=centos;ndd=2022/11/25;spec=2C/4G/60G;"},
-  {gid = "g2", password = "pp", location = "🏢", type = "kvm", notify = true},
+  # {gid = "g1", password = "pp", location = "🏠", type = "kvm", labels = "os=centos;ndd=2022/11/25;spec=2C/4G/60G;"},
+  # {gid = "g2", password = "pp", location = "🏢", type = "kvm", notify = true},
   # 例如不发送通知可以单独做一组
-  {gid = "silent", password = "pp", location = "🏡", type = "kvm", notify = false},
+  # {gid = "silent", password = "pp", location = "🏡", type = "kvm", notify = false},
 ]
 # 动态注册模式下，无效数据清理间隔，默认 30s
-group_gc = 30
+# group_gc = 30
 
 # !!! 一键部署如果没问题则不需要动，Server 会自行根据你的域名生成 server_url
 # 修正一键部署，请自行替换 ssr.rs 为你的域名,
-# server_url = "https://ssr.rs/report"
+server_url = "http://129.152.19.1:8080/report"
 # stat_client 默认安装的路径
 workspace = "/root/docker/ServerStatus"
 
@@ -64,7 +64,6 @@ custom_tpl = """
 {% if host.memory_used / host.memory_total > 0.5  %}
 <pre>😲 {{host.name}} 主机内存使用率超50%, 当前{{ (100 * host.memory_used / host.memory_total) | round }}%  </pre>
 {% endif %}
-
 {% if host.hdd_used / host.hdd_total  > 0.5  %}
 <pre>😲 {{host.name}} 主机硬盘使用率超50%, 当前{{ (100 * host.hdd_used / host.hdd_total) | round }}% </pre>
 {% endif %}
@@ -74,7 +73,7 @@ custom_tpl = """
 ## 可选 单纯记录 event 到日志文件，调试自定义告警使用
 [log]
 enabled = false
-log_dir = "/opt/ServerStatus/logs"
+log_dir = "/root/docker/ServerStatus/logs"
 tpl = """{% set obj = dict(event=event, host=host, ip_info=ip_info, sys_info=sys_info) %} {{ obj | tojson}}"""
 
 ###################### log end ##########################
@@ -92,7 +91,6 @@ custom_tpl = """
 {% if host.memory_used / host.memory_total > 0.8  %}
 😲 {{host.name}} 主机内存使用率超80%
 {% endif %}
-
 {% if host.hdd_used / host.hdd_total > 0.8  %}
 😲 {{host.name}} 主机硬盘使用率超80%
 {% endif %}
@@ -114,7 +112,6 @@ custom_tpl = """
 {% if host.memory_used / host.memory_total > 0.8  %}
 <pre>😲 {{host.name}} 主机内存使用率超80%, 当前{{ (100 * host.memory_used / host.memory_total) | round }}%  </pre>
 {% endif %}
-
 {% if host.hdd_used / host.hdd_total > 0.8  %}
 <pre>😲 {{host.name}} 主机硬盘使用率超80%, 当前{{ (100 * host.hdd_used / host.hdd_total) | round }}% </pre>
 {% endif %}
@@ -174,7 +171,6 @@ enabled = false
           message = `😆 ${host.location} ${host.name} 主机恢复上线啦`;
       }
     }
-
     // 返回的 json 结构，#{} 为 Object 对象, [] 为数组
     // 最终结果, 固定结构 [是否发送通知，结果对象]
     [message.len() > 0, #{ embeds: [ #{
@@ -216,7 +212,6 @@ enabled = false
           message = `😆 ${host.location} ${host.name} 主机恢复上线啦`;
       }
     }
-
     // 最终结果, 固定结构 [是否发送通知，结果对象]
     [message.len() > 0, #{text: message}]
   """
@@ -250,7 +245,6 @@ enabled = false
           message = `😆 ${host.location} ${host.name} 主机恢复上线啦`;
       }
     }
-
     // 最终结果, 固定结构 [是否发送通知，结果对象]
     [message.len() > 0, #{
       msgtype: "text",
@@ -291,7 +285,6 @@ enabled = false
           message = `😆 ${host.location} ${host.name} 主机恢复上线啦`;
       }
     }
-
     // 最终结果, 固定结构 [是否发送通知，结果对象]
     [message.len() > 0, #{
       // 标题
@@ -307,7 +300,6 @@ enabled = false
       icon: "https://day.app/assets/images/avatar.jpg",
       group: "SSR",
       url: "https://github.com/zdz/ServerStatus-Rust"
-
     }]
   """
 
