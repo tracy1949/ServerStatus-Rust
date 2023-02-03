@@ -5,8 +5,8 @@ http_addr = "0.0.0.0:8080"
 offline_threshold = 30
 
 # 管理员账号,不设置默认随机生成，用于查看 /detail, /map
-admin_user = ""
-admin_pass = ""
+admin_user = "tracy561"
+admin_pass = "200511"
 
 # hosts 跟 hosts_group 两种配置模式任挑一种配置即可
 # name 主机唯一标识，不可重复，alias 为展示名
@@ -41,7 +41,7 @@ group_gc = 30
 # 修正一键部署，请自行替换 ssr.rs 为你的域名,
 # server_url = "https://ssr.rs/report"
 # stat_client 默认安装的路径
-workspace = "/opt/ServerStatus"
+workspace = "/root/docker/ServerStatus"
 
 # 不开启告警，可忽略后面配置，或者删除不需的通知方式
 # 告警间隔默认为30s
@@ -50,9 +50,9 @@ notify_interval = 30
 # https://jinja.palletsprojects.com/en/3.0.x/templates/#if
 [tgbot]
 # 开关 true 打开
-enabled = false
-bot_token = "<tg bot token>"
-chat_id = "<chat id>"
+enabled = true
+bot_token = "<2070447842:AAGLmEcGHbrov7Pr5p7tFnuvZgJHJkVjjSQ>"
+chat_id = "<1426551572>"
 # host 可用字段见 payload.rs 文件 HostStat 结构, {{host.xxx}} 为占位变量
 # 例如 host.name 可替换为 host.alias，大家根据自己的喜好来编写通知消息
 # {{ip_info.query}} 主机 ip, {{sys_info.host_name}} 主机 hostname，见 server_status.proto
