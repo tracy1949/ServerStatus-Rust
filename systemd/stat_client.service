@@ -8,7 +8,7 @@ Group=root
 Environment="RUST_BACKTRACE=1"
 WorkingDirectory=/root/docker/ServerStatus
 # EnvironmentFile=/root/docker/ServerStatus/.env
-ExecStart=/root/docker/ServerStatus/stat_client -a "https://serverstatu.eu.org/report" -u h1 -p p1
+ExecStart=/root/docker/ServerStatus/stat_client -a "http://129.152.19.1:8080/report" -u h1 -p p1
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-failure
 
