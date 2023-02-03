@@ -8,8 +8,8 @@ Info="\033[32m[信息]\033[0m"
 Error="\033[31m[错误]\033[0m"
 Tip="\033[32m[注意]\033[0m"
 
-client_dir=/usr/local/ServerStatus/client/
-server_dir=/usr/local/ServerStatus/server/
+client_dir=/root/docker/ServerStatus/client/
+server_dir=/root/docker/ServerStatus/server/
 client_conf=/lib/systemd/system/stat_client.service
 server_conf=/lib/systemd/system/stat_server.service
 
@@ -126,8 +126,8 @@ After=network.target
 #User=nobody
 #Group=nobody
 Environment="RUST_BACKTRACE=1"
-WorkingDirectory=/usr/local/ServerStatus
-ExecStart=/usr/local/ServerStatus/server/stat_server -c /usr/local/ServerStatus/server/config.toml
+WorkingDirectory=/root/docker/ServerStatus
+ExecStart=/root/docker/ServerStatus/server/stat_server -c /root/docker/ServerStatus/server/config.toml
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-failure
 
@@ -146,8 +146,8 @@ After=network.target
 User=root
 Group=root
 Environment="RUST_BACKTRACE=1"
-WorkingDirectory=/usr/local/ServerStatus
-ExecStart=/usr/local/ServerStatus/client/stat_client -a "${PROTOCOL}://${MASTER}" -u ${USER} -p ${PASSWD}
+WorkingDirectory=/root/docker/ServerStatus
+ExecStart=/root/docker/ServerStatus/client/stat_client -a "${PROTOCOL}://${MASTER}" -u ${USER} -p ${PASSWD}
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-failure
 
@@ -247,9 +247,9 @@ function install_server() {
     echo -e "${Info} 下载 ${arch} 二进制文件"
     [ -f "/tmp/stat_server" ] || get_status
     mkdir -p ${server_dir}
-    mv /tmp/stat_server /usr/local/ServerStatus/server/stat_server
-    mv /tmp/config.toml /usr/local/ServerStatus/server/config.toml
-    chmod +x /usr/local/ServerStatus/server/stat_server
+    mv /tmp/stat_server /root/docker/ServerStatus/server/stat_server
+    mv /tmp/config.toml /root/docker/ServerStatus/server/config.toml
+    chmod +x /root/docker/ServerStatus/server/stat_server
     enable_server
 }
 function install_client() {
@@ -257,7 +257,7 @@ function install_client() {
     [ -f "/tmp/stat_client" ] || get_status
     mkdir -p ${client_dir}
     mv /tmp/stat_client /usr/local/ServerStatus/client/stat_client
-    chmod +x /usr/local/ServerStatus/client/stat_client
+    chmod +x /root/docker/ServerStatus/client/stat_client
     input_upm
     get_conf
     enable_client
