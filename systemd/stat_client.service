@@ -6,9 +6,9 @@ After=network.target
 User=root
 Group=root
 Environment="RUST_BACKTRACE=1"
-WorkingDirectory=/opt/ServerStatus
-# EnvironmentFile=/opt/ServerStatus/.env
-ExecStart=/opt/ServerStatus/stat_client -a "http://127.0.0.1:8080/report" -u h1 -p p1
+WorkingDirectory=/root/docker/ServerStatus
+# EnvironmentFile=/root/docker/ServerStatus/.env
+ExecStart=/root/docker/ServerStatus/stat_client -a "http://127.0.0.1:8080/report" -u h1 -p p1
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-failure
 
