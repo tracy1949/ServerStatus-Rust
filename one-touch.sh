@@ -30,8 +30,8 @@ systemctl status stat_server
 systemctl status stat_client
 
 # 使用以下命令开机自启
-# systemctl enable stat_server
-# systemctl enable stat_client
+systemctl enable stat_server
+systemctl enable stat_client
 
 # 停止
 # systemctl stop stat_server
